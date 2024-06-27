@@ -10,7 +10,13 @@ import Image from 'next/image';
 import styles from '../styles/Home.module.css';
 
 const wethAbi = [
-  "function deposit() public payable",
+	{
+		"inputs": [],
+		"name": "deposit",
+		"outputs": [],
+		"stateMutability": "payable",
+		"type": "function"
+	}
 ];
 
 const Home: NextPage = () => {
@@ -33,12 +39,15 @@ const Home: NextPage = () => {
       return;
     }
     writeContract({
-      address: "0xde104342B32BCa03ec995f999181f7Cf1fFc04d7",
+      address: "0x22b9fa698b68bba071b513959794e9a47d19214c",
       abi: wethAbi,
       functionName: "deposit",
-      args: [Number(amount)]
+      value: BigInt(amount) * BigInt(1e18),
+      args: []
     });
   };
+
+  console.log("write error", writeError);
 
   return (
     <div className={styles.container}>
