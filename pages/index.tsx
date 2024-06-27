@@ -1,13 +1,13 @@
 
-import { useState } from 'react';
-import { useAccount, useWriteContract, useConnect, useDisconnect } from 'wagmi';
-import { parseEther } from 'viem';
-import { ConnectButton, darkTheme } from '@rainbow-me/rainbowkit';
+import { useState, useEffect } from "react";
+import { useAccount, useWriteContract, useConnect, useDisconnect } from "wagmi";
+import { parseEther } from "viem";
+import { ConnectButton, darkTheme } from "@rainbow-me/rainbowkit";
 
-import type { NextPage } from 'next';
-import Head from 'next/head';
-import Image from 'next/image';
-import styles from '../styles/Home.module.css';
+import type { NextPage } from "next";
+import Head from "next/head";
+import Image from "next/image";
+import styles from "../styles/Home.module.css";
 
 const wethAbi = [
 	{
@@ -20,7 +20,10 @@ const wethAbi = [
 ];
 
 const Home: NextPage = () => {
-  const [amount, setAmount] = useState('');
+  const [amount, setAmount] = useState("");
+  const [message, setMessage] = useState("");
+  const [isEnabled, setIsEnabled] = useState(true);
+
   const account = useAccount();
   const { connectors, connect, status, error: walletConnectError } = useConnect();
   const { disconnect } = useDisconnect();
@@ -33,11 +36,20 @@ const Home: NextPage = () => {
     reset,
   } = useWriteContract();
 
+  useEffect(() => {
+    if (!isPending && writeError != null) setIsEnabled(true);
+  }, [isPending]);
+
+  useEffect(() => {
+    if (writeError) setMessage(`${writeError}`);
+  }, [writeError]);
+
   const handleWrap = async () => {
     if (!amount || isNaN(Number(amount))) {
-      alert('Please enter a valid amount');
+      setMessage("Enter a valid amount");
       return;
     }
+    setIsEnabled(false);
     writeContract({
       address: "0x22b9fa698b68bba071b513959794e9a47d19214c",
       abi: wethAbi,
@@ -46,8 +58,6 @@ const Home: NextPage = () => {
       args: []
     });
   };
-
-  console.log("write error", writeError);
 
   return (
     <div className={styles.container}>
@@ -89,9 +99,11 @@ const Home: NextPage = () => {
                 onChange={(e) => setAmount(e.target.value)}
                 className="input"
               />
+              {message}
               <button
                 onClick={handleWrap}
                 className="button"
+                disabled={!isEnabled}
               >
                 Wrap SPN
               </button>
