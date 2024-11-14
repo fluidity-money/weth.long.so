@@ -83,8 +83,8 @@ const Home: NextPage = () => {
                 <Image
                   src="/superposition.svg"
                   alt="Superposition Logo"
-                  width={175}
-                  height={240}
+                  width={150}
+                  height={20}
                   className="invert"
                   priority
                 />
