@@ -12,7 +12,7 @@ import styles from "../styles/Home.module.css";
 const wethAbi = [
 	{
 		"inputs": [],
-		"name": "deposit",
+		"name": "receive",
 		"outputs": [],
 		"stateMutability": "payable",
 		"type": "function"
@@ -51,7 +51,7 @@ const Home: NextPage = () => {
     }
     setIsEnabled(false);
     writeContract({
-      address: "0x22b9fa698b68bba071b513959794e9a47d19214c",
+      address: "0x1fB719f10b56d7a85DCD32f27f897375fB21cfdd",
       abi: wethAbi,
       functionName: "deposit",
       value: BigInt(amount) * BigInt(1e18),
@@ -91,10 +91,10 @@ const Home: NextPage = () => {
               </a>
             </div>
             <div className="card">
-              <h1 className="card-title">Wrap SPN to WSPN</h1>
+              <h1 className="card-title">Wrap ETH to WETH</h1>
               <input
                 type="number"
-                placeholder="Amount of SPN"
+                placeholder="Amount of ETH"
                 value={amount}
                 onChange={(e) => setAmount(e.target.value)}
                 className="input"
