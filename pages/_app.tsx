@@ -12,7 +12,7 @@ const config = getDefaultConfig({
   chains: [{
     name: "Superposition",
     id: 55244,
-    nativeCurrency: { name: "Superposition", symbol: "ETH", decimals: 18 },
+    nativeCurrency: { name: "Ether", symbol: "ETH", decimals: 18 },
     contracts: {
       multicall3: {
         address: "0xcA11bde05977b3631167028862bE2a173976CA11" as const,
