@@ -7,7 +7,7 @@ import { WagmiProvider } from 'wagmi';
 import { getDefaultConfig, RainbowKitProvider } from '@rainbow-me/rainbowkit';
 
 const config = getDefaultConfig({
-  appName: 'SPN Wrapper',
+  appName: 'ETH Wrapper',
   projectId: `${process.env.NEXT_PUBLIC_WSPN_WALLETCONNECT_PROJECT_ID}`,
   chains: [{
     name: "Superposition",

@@ -62,9 +62,9 @@ const Home: NextPage = () => {
   return (
     <div className={styles.container}>
       <Head>
-        <title>SPN Wrapper</title>
+        <title>ETH Wrapper</title>
         <meta
-          content="SPN wrapper for Superposition Testnet"
+          content="ETH wrapper for Superposition Mainnet"
           name="description"
         />
         <link href="/favicon.ico" rel="icon" />
