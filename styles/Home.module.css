@@ -100,3 +100,7 @@
     flex-direction: column;
   }
 }
+
+.navbar-link {
+  margin-top: 20px;
+}

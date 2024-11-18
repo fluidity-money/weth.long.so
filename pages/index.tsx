@@ -73,7 +73,7 @@ const Home: NextPage = () => {
         <main className="main">
           <section className="section">
             <div className="navbar">
-              <p className="navbar-text">Wrap SPN</p>
+              <p className="navbar-text">Wrap ETH</p>
               <a
                 className="navbar-link"
                 href="https://superposition.so"
@@ -105,7 +105,7 @@ const Home: NextPage = () => {
                 className="button"
                 disabled={!isEnabled}
               >
-                Wrap SPN
+                Wrap ETH
               </button>
               <div style={{ padding: "10px" }}><ConnectButton /></div>
             </div>
