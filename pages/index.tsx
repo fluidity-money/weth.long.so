@@ -53,7 +53,7 @@ const Home: NextPage = () => {
     writeContract({
       address: "0x1fB719f10b56d7a85DCD32f27f897375fB21cfdd",
       abi: wethAbi,
-      functionName: "deposit",
+      functionName: "receive",
       value: BigInt(amount) * BigInt(1e18),
       args: []
     });
