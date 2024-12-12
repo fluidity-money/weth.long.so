@@ -54,7 +54,7 @@ const Home: NextPage = () => {
       address: "0x1fB719f10b56d7a85DCD32f27f897375fB21cfdd",
       abi: wethAbi,
       functionName: "deposit",
-      value: BigInt(amount) * BigInt(1e18),
+      value: parseEther(amount),
       args: []
     });
   };
