@@ -21,8 +21,11 @@ const wethAbi = [
 
 const Home: NextPage = () => {
   const [amount, setAmount] = useState("");
+  const [amount2, setAmount2] = useState("");
   const [message, setMessage] = useState("");
+  const [message2, setMessage2] = useState("");
   const [isEnabled, setIsEnabled] = useState(true);
+  const [isEnabled2, setIsEnabled2] = useState(true);
 
   const account = useAccount();
   const { connectors, connect, status, error: walletConnectError } = useConnect();
@@ -37,11 +40,17 @@ const Home: NextPage = () => {
   } = useWriteContract();
 
   useEffect(() => {
-    if (!isPending && writeError != null) setIsEnabled(true);
+    if (!isPending && writeError != null) {
+      setIsEnabled(true);
+      setIsEnabled2(true);
+    }
   }, [isPending]);
 
   useEffect(() => {
-    if (writeError) setMessage(`${writeError}`);
+    if (writeError) {
+      setMessage(`${writeError}`);
+      setMessage2(`${writeError}`);
+    }
   }, [writeError]);
 
   const handleWrap = async () => {
@@ -55,6 +64,21 @@ const Home: NextPage = () => {
       abi: wethAbi,
       functionName: "deposit",
       value: parseEther(amount),
+      args: []
+    });
+  };
+
+  const handleWrap2 = async () => {
+    if (!amount2 || isNaN(Number(amount2))) {
+      setMessage2("Enter a valid amount");
+      return;
+    }
+    setIsEnabled2(false);
+    writeContract({
+      address: "0x1fB719f10b56d7a85DCD32f27f897375fB21cfdd",
+      abi: wethAbi,
+      functionName: "deposit",
+      value: parseEther(amount2),
       args: []
     });
   };
@@ -108,6 +132,24 @@ const Home: NextPage = () => {
                 Wrap ETH
               </button>
               <div style={{ padding: "10px" }}><ConnectButton /></div>
+            </div>
+            <div className="card" style={{ marginTop: "20px" }}>
+              <h1 className="card-title">Wrap ETH to WETH (Second)</h1>
+              <input
+                type="number"
+                placeholder="Amount of ETH"
+                value={amount2}
+                onChange={(e) => setAmount2(e.target.value)}
+                className="input"
+              />
+              {message2}
+              <button
+                onClick={handleWrap2}
+                className="button"
+                disabled={!isEnabled2}
+              >
+                Wrap ETH
+              </button>
             </div>
           </section>
         </main>
