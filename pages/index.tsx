@@ -26,6 +26,7 @@ const wethAbi = [
 				"type": "uint256"
 			}
 		],
+		"outputs": [],
 		"name": "withdraw",
 		"stateMutability": "nonpayable",
 		"type": "function"
