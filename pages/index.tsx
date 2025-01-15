@@ -5,6 +5,7 @@ import { parseEther } from "viem";
 import { ConnectButton, darkTheme } from "@rainbow-me/rainbowkit";
 
 import type { NextPage } from "next";
+import type { JSX } from "react";
 import Head from "next/head";
 import Image from "next/image";
 import styles from "../styles/Home.module.css";
@@ -16,11 +17,25 @@ const wethAbi = [
 		"outputs": [],
 		"stateMutability": "payable",
 		"type": "function"
+	},
+	{
+		"inputs": [
+			{
+				"internalType": "uint256",
+				"name": "wad",
+				"type": "uint256"
+			}
+		],
+		"name": "withdraw",
+		"outputs": [],
+		"stateMutability": "nonpayable",
+		"type": "function"
 	}
 ];
 
 const Home: NextPage = () => {
   const [amount, setAmount] = useState("");
+  const [withdrawAmount, setWithdrawAmount] = useState("");
   const [message, setMessage] = useState("");
   const [isEnabled, setIsEnabled] = useState(true);
 
@@ -38,7 +53,7 @@ const Home: NextPage = () => {
 
   useEffect(() => {
     if (!isPending && writeError != null) setIsEnabled(true);
-  }, [isPending]);
+  }, [isPending, writeError]);
 
   useEffect(() => {
     if (writeError) setMessage(`${writeError}`);
@@ -56,6 +71,20 @@ const Home: NextPage = () => {
       functionName: "deposit",
       value: parseEther(amount),
       args: []
+    });
+  };
+
+  const handleWithdraw = async () => {
+    if (!withdrawAmount || isNaN(Number(withdrawAmount))) {
+      setMessage("Enter a valid amount");
+      return;
+    }
+    setIsEnabled(false);
+    writeContract({
+      address: "0x1fB719f10b56d7a85DCD32f27f897375fB21cfdd",
+      abi: wethAbi,
+      functionName: "withdraw",
+      args: [parseEther(withdrawAmount)]
     });
   };
 
@@ -108,6 +137,24 @@ const Home: NextPage = () => {
                 Wrap ETH
               </button>
               <div style={{ padding: "10px" }}><ConnectButton /></div>
+            </div>
+            <div className="card">
+              <h1 className="card-title">Withdraw WETH</h1>
+              <input
+                type="number"
+                placeholder="Amount of WETH"
+                value={withdrawAmount}
+                onChange={(e) => setWithdrawAmount(e.target.value)}
+                className="input"
+              />
+              {message}
+              <button
+                onClick={handleWithdraw}
+                className="button"
+                disabled={!isEnabled}
+              >
+                Withdraw WETH
+              </button>
             </div>
           </section>
         </main>
